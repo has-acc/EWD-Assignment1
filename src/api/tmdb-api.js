@@ -29,3 +29,26 @@ export const getMovieImages = (id) => {
         .then((res) => res.json())
         .then((json) => json.posters);
 };
+
+export const getTVShows = () => {
+    return fetch(
+        `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&page=1`
+    )
+        .then(res => res.json())
+        .then(json => json.results);
+};
+
+export const getTVShow = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&page=1`
+    )
+        .then(res => res.json());
+};
+
+export const getTVShowImages = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/tv/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((res) => res.json())
+        .then((json) => json.posters);
+};
