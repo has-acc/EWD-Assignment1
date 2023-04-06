@@ -35,7 +35,7 @@ const App = () => {
                 <Route path="/tvshows/:id" element={<TVShowPage />} />
                 <Route path="/movies/" element={<HomePage />} />
                 <Route path="/tvshows/" element={<HomePage2 />} />
-                <Route path="/" element={<HomePage2 />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>

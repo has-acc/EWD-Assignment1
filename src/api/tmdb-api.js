@@ -52,3 +52,21 @@ export const getTVShowImages = (id) => {
         .then((res) => res.json())
         .then((json) => json.posters);
 };
+
+export const getTVShowCredits = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((res) => res.json())
+        .then(json => json.cast);
+
+}
+
+export const getMovieCredits = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((res) => res.json())
+        .then(json => json.cast);
+
+}

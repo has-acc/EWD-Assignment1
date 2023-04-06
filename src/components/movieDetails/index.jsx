@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
+import Slider from "react-slick";
+import Card from "@mui/material/Card";
+import { getMovieCredits } from "../../api/tmdb-api";
 
 const styles = {
     chipSet: {
@@ -19,11 +22,65 @@ const styles = {
     chipLabel: {
         margin: 0.5,
     },
+    card: {
+        maxWidth: 300,
+        alignItems: "center"},
+
 };
+
+
+var settings = {
+      dots: true,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 4,
+      initialSlide: 0,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            initialSlide: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    };
 
 const MovieDetails = (props) => {
     const movie = props.movie
+    const [movieCredits, setMovieCredits] = useState([]);
 
+     useEffect(() => {
+         getMovieCredits(movie.id).then(movieCredits => {
+             movieCredits.map(movieCredit => {
+                 if (movieCredit.profile_path === null) {
+                    movieCredit.profile_path="https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg"
+                 } else {
+                    movieCredit.profile_path='https://www.themoviedb.org/t/p/w300_and_h300_face/' + movieCredit.profile_path
+                 }
+             }
+             ) 
+            setMovieCredits(movieCredits);
+        });
+     }, []);
     return (
         <>
             <Typography variant="h5" component="h3">
@@ -66,6 +123,24 @@ const MovieDetails = (props) => {
                     </li>
                 ))}
             </Paper>
+            <Typography variant="h5" component="h3">
+                Cast
+            </Typography>
+
+            <Typography variant="h6" component="p">
+                <Slider {...settings}>
+                    {movieCredits.map(
+                        movieCredit => (
+                        <Card sx={styles.card}>
+                            <div>
+                                <><img src={movieCredit.profile_path} /><br></br></>
+                                Name: {movieCredit.name}<br></br>
+                                Character: {movieCredit.character}
+                            </div>
+                        </Card>
+                        ))}
+                </Slider>
+            </Typography>
         </>
     );
 };
