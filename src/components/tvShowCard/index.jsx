@@ -43,7 +43,7 @@ export default function TVShowCard(props) {
                     ) : null
                 }
                 title={
-                    <Typography variant="h5" component="p">
+                    <Typography variant="h5" component="span">
                         {tvShow.name}{" "}
                     </Typography>
                 }
@@ -59,13 +59,13 @@ export default function TVShowCard(props) {
             <CardContent>
                 <Grid container>
                     <Grid item xs={6}>
-                        <Typography variant="h6" component="p">
+                        <Typography variant="h6" component="span">
                             <CalendarIcon fontSize="small" />
                             {tvShow.first_air_date}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography variant="h6" component="p">
+                        <Typography variant="h6" component="span">
                             <StarRateIcon fontSize="small" />
                             {"  "} {tvShow.vote_average}{" "}
                         </Typography>

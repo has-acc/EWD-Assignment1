@@ -34,7 +34,7 @@ function TVShowListPageTemplate({ tvShows, title, selectTVFavourite }) {
         });
 
     const handleChange = (type, value) => {
-        if (type === "name") setTitleFilter(value);
+        if (type === "title") setTitleFilter(value);
         else setGenreFilter(value);
     };
 

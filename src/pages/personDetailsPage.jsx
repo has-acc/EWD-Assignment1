@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import MovieHeader from "../components/headerMovie/";
-import MovieDetails from "../components/movieDetails/";
+import PersonHeader from "../components/headerPerson";
+import PersonDetails from "../components/personDetails";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getMovie, getMovieImages } from "../api/tmdb-api";
+import { getPerson, getPersonImages } from "../api/tmdb-api";
 
 const styles = {
     imageListRoot: {
@@ -15,28 +15,28 @@ const styles = {
     },
 };
 
-const MoviePage = (props) => {
+const PersonPage = (props) => {
     const { id } = useParams();
-    const [movie, setMovie] = useState(null);
+    const [person, setPerson] = useState(null);
     const [images, setImages] = useState([]);
 
     useEffect(() => {
-        getMovie(id).then((movie) => {
-            setMovie(movie);
+        getPerson(id).then((person) => {
+            setPerson(person);
         });
     }, [id]);
 
     useEffect(() => {
-        getMovieImages(id).then((images) => {
+        getPersonImages(id).then((images) => {
             setImages(images);
         });
     }, []);
 
     return (
         <>
-            {movie ? (
+            {person ? (
                 <>
-                    <MovieHeader movie={movie} />
+                    <PersonHeader person={person} />
                     <Grid container spacing={5} style={{ padding: "15px" }}>
                         <Grid item xs={3}>
                             <div sx={styles.imageListRoot}>
@@ -57,7 +57,7 @@ const MoviePage = (props) => {
                             </div>
                         </Grid>
                         <Grid item xs={9}>
-                            <MovieDetails movie={movie} />
+                            <PersonDetails person={person} />
                         </Grid>
                     </Grid>
                 </>
@@ -68,4 +68,4 @@ const MoviePage = (props) => {
     );
 };
 
-export default MoviePage;
+export default PersonPage;

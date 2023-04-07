@@ -43,7 +43,7 @@ export default function MovieCard(props) {
                     ) : null
                 }
                 title={
-                    <Typography variant="h5" component="p">
+                    <Typography variant="h5" component="span">
                         {movie.title}{" "}
                     </Typography>
                 }
@@ -59,13 +59,13 @@ export default function MovieCard(props) {
             <CardContent>
                 <Grid container>
                     <Grid item xs={6}>
-                        <Typography variant="h6" component="p">
+                        <Typography variant="h6" component="span">
                             <CalendarIcon fontSize="small" />
                             {movie.release_date}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography variant="h6" component="p">
+                        <Typography variant="h6" component="span">
                             <StarRateIcon fontSize="small" />
                             {"  "} {movie.vote_average}{" "}
                         </Typography>

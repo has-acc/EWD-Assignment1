@@ -87,7 +87,7 @@ const MovieDetails = (props) => {
                 Overview
             </Typography>
 
-            <Typography variant="h6" component="p">
+            <Typography variant="h6" component="span">
                 {movie.overview}
             </Typography>
 
@@ -127,17 +127,20 @@ const MovieDetails = (props) => {
                 Cast
             </Typography>
 
-            <Typography variant="h6" component="p">
+            <Typography variant="h6" component="span">
                 <Slider {...settings}>
                     {movieCredits.map(
                         movieCredit => (
-                        <Card sx={styles.card}>
-                            <div>
-                                <><img src={movieCredit.profile_path} /><br></br></>
-                                Name: {movieCredit.name}<br></br>
-                                Character: {movieCredit.character}
-                            </div>
-                        </Card>
+                        <a href={"/person/"+movieCredit.id}>
+
+                                <Card sx={styles.card}>
+                                <div>
+                                    <><img src={movieCredit.profile_path} /><br></br></>
+                                    Name: {movieCredit.name}<br></br>
+                                    Character: {movieCredit.character}
+                                </div>
+                            </Card>
+                        </a>
                         ))}
                 </Slider>
             </Typography>

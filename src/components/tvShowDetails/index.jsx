@@ -85,7 +85,7 @@ const TVShowDetails = (props) => {
                 Overview
             </Typography>
 
-            <Typography variant="h6" component="p">
+            <Typography variant="h6" component="span">
                 {tvShow.overview}
             </Typography>
 
@@ -132,16 +132,18 @@ const TVShowDetails = (props) => {
                 Cast
             </Typography>
 
-            <Typography variant="h6" component="p">
+            <Typography variant="h6" component="span">
                 <Slider {...settings}>
                     {tvShowCredits.map(tvShowCredit => (
-                    <Card sx={styles.card}>
-                        <div>
-                            <><img src={tvShowCredit.profile_path} /><br></br></>
-                            Name: {tvShowCredit.name}<br></br>
-                            Character:{tvShowCredit.character}
-                        </div>
-                    </Card>
+                        <a href={"/person/"+tvShowCredit.id}>
+                        <Card sx={styles.card}>
+                            <div>
+                                <><img src={tvShowCredit.profile_path} /><br></br></>
+                                Name: {tvShowCredit.name}<br></br>
+                                Character:{tvShowCredit.character}
+                            </div>
+                        </Card>
+                        </a>
                     ))}
                 </Slider>
             </Typography>

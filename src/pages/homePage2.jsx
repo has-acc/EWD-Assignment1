@@ -22,7 +22,7 @@ const HomePage = (props) => {
 
     return (
         <PageTemplate
-            title='Discover TVShows'
+            title='Discover TV Shows'
             tvShows={tvShows}
             selectTVFavourite={addToTVFavourites}
         />

@@ -7,6 +7,7 @@ import MoviePage from "./pages/movieDetailsPage";
 import TVShowPage from "./pages/tvshowDetailsPage";
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import FavouriteTVShowsPage from "./pages/favouriteTVShowsPage";
+import PersonPage from "./pages/personDetailsPage";
 
 const App = () => {
     return (
@@ -35,6 +36,7 @@ const App = () => {
                 <Route path="/tvshows/:id" element={<TVShowPage />} />
                 <Route path="/movies/" element={<HomePage />} />
                 <Route path="/tvshows/" element={<HomePage2 />} />
+                <Route path="/person/:id" element={<PersonPage />} />
                 <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>

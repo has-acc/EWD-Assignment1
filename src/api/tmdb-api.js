@@ -70,3 +70,19 @@ export const getMovieCredits = (id) => {
         .then(json => json.cast);
 
 }
+
+export const getPerson = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/person/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((res) => res.json());
+
+}
+
+export const getPersonImages = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/person/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((res) => res.json())
+        .then((json) => json.profiles);
+};
