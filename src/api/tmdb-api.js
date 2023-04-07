@@ -30,6 +30,24 @@ export const getMovieImages = (id) => {
         .then((json) => json.posters);
 };
 
+export const getMovieCredits = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((res) => res.json())
+        .then(json => json.cast);
+
+}
+
+export const getSimilarMovies = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((res) => res.json())
+        .then(json => json.results);
+
+}
+
 export const getTVShows = () => {
     return fetch(
         `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&page=1`
@@ -62,15 +80,6 @@ export const getTVShowCredits = (id) => {
 
 }
 
-export const getMovieCredits = (id) => {
-    return fetch(
-        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_KEY}`
-    )
-        .then((res) => res.json())
-        .then(json => json.cast);
-
-}
-
 export const getPerson = (id) => {
     return fetch(
         `https://api.themoviedb.org/3/person/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
@@ -86,3 +95,12 @@ export const getPersonImages = (id) => {
         .then((res) => res.json())
         .then((json) => json.profiles);
 };
+
+export const getSimilarTVShows = (id) => {
+    return fetch(
+        `https://api.themoviedb.org/3/tv/${id}/similar?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+        .then((res) => res.json())
+        .then(json => json.results);
+
+}

@@ -7,7 +7,7 @@ import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
 import Slider from "react-slick";
 import Card from "@mui/material/Card";
-import { getMovieCredits } from "../../api/tmdb-api";
+import { getMovieCredits, getSimilarMovies } from "../../api/tmdb-api";
 
 const styles = {
     chipSet: {
@@ -42,7 +42,7 @@ var settings = {
           settings: {
             slidesToShow: 3,
             slidesToScroll: 3,
-            infinite: true,
+            infinite: false,
             dots: true
           }
         },
@@ -67,6 +67,7 @@ var settings = {
 const MovieDetails = (props) => {
     const movie = props.movie
     const [movieCredits, setMovieCredits] = useState([]);
+    const [similarMovies, setSimilarMovies] = useState([]);
 
      useEffect(() => {
          getMovieCredits(movie.id).then(movieCredits => {
@@ -76,11 +77,20 @@ const MovieDetails = (props) => {
                  } else {
                     movieCredit.profile_path='https://www.themoviedb.org/t/p/w300_and_h300_face/' + movieCredit.profile_path
                  }
-             }
-             ) 
+             }) 
             setMovieCredits(movieCredits);
         });
      }, []);
+    
+    useEffect(() => {
+        getSimilarMovies(movie.id).then(similarMovies => {
+            similarMovies.map(similarMovie => {
+                similarMovie.backdrop_path='https://www.themoviedb.org/t/p/w300_and_h300_face/' + similarMovie.backdrop_path
+            })
+            setSimilarMovies(similarMovies);
+        });
+    }, []);
+    
     return (
         <>
             <Typography variant="h5" component="h3">
@@ -131,13 +141,33 @@ const MovieDetails = (props) => {
                 <Slider {...settings}>
                     {movieCredits.map(
                         movieCredit => (
-                        <a href={"/person/"+movieCredit.id}>
+                            <a href={"/person/" + movieCredit.id} key={movieCredit.id}>
 
                                 <Card sx={styles.card}>
                                 <div>
                                     <><img src={movieCredit.profile_path} /><br></br></>
                                     Name: {movieCredit.name}<br></br>
                                     Character: {movieCredit.character}
+                                </div>
+                            </Card>
+                        </a>
+                        ))}
+                </Slider>
+            </Typography>
+            <p></p>
+            <Typography variant="h5" component="h3">
+                Similar Movies                 
+            </Typography>
+            <Typography variant="h6" component="span">
+                <Slider {...settings}>
+                    {similarMovies.slice(0,4).map(
+                        similarMovie => (
+                            <a href={"/movies/" + similarMovie.id} key={similarMovie.id}>
+
+                                <Card sx={styles.card}>
+                                <div>
+                                    <><img src={similarMovie.backdrop_path} /><br></br></>
+                                    Title: {similarMovie.title}<br></br>
                                 </div>
                             </Card>
                         </a>

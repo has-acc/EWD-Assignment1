@@ -5,7 +5,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-import { getTVShowCredits } from "../../api/tmdb-api";
+import { getTVShowCredits, getSimilarTVShows } from "../../api/tmdb-api";
 import Slider from "react-slick";
 import Card from "@mui/material/Card";
 
@@ -63,6 +63,7 @@ var settings = {
 const TVShowDetails = (props) => {
     const tvShow = props.tvShow
     const [tvShowCredits, setTVShowCredits] = useState([]);
+    const [similarTVShows, setSimilarTVShows] = useState([]);
 
      useEffect(() => {
          getTVShowCredits(tvShow.id).then(tvShowCredits => {
@@ -77,6 +78,15 @@ const TVShowDetails = (props) => {
             setTVShowCredits(tvShowCredits);
         });
      }, []);
+    
+    useEffect(() => {
+        getSimilarTVShows(tvShow.id).then(similarTVShows => {
+            similarTVShows.map(similarTVShow => {
+                similarTVShow.poster_path='https://www.themoviedb.org/t/p/w300_and_h300_face/' + similarTVShow.poster_path
+            })
+            setSimilarTVShows(similarTVShows);
+        });
+    }, []);
 
     return (
         <>
@@ -145,6 +155,26 @@ const TVShowDetails = (props) => {
                         </Card>
                         </a>
                     ))}
+                </Slider>
+            </Typography>
+            <p></p>
+            <Typography variant="h5" component="h3">
+                Similar TV Shows                 
+            </Typography>
+            <Typography variant="h6" component="span">
+                <Slider {...settings}>
+                    {similarTVShows.slice(0,4).map(
+                        similarTVShow => (
+                            <a href={"/tvshows/" + similarTVShow.id} key={similarTVShow.id}>
+
+                                <Card sx={styles.card}>
+                                <div>
+                                    <><img src={similarTVShow.poster_path} /><br></br></>
+                                    Name: {similarTVShow.name}<br></br>
+                                </div>
+                            </Card>
+                        </a>
+                        ))}
                 </Slider>
             </Typography>
         </>
