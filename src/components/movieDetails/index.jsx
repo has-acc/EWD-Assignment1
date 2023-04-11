@@ -9,6 +9,11 @@ import Slider from "react-slick";
 import Card from "@mui/material/Card";
 import { getMovieCredits, getSimilarMovies, getTVShowCredits, getSimilarTVShows } from "../../api/tmdb-api";
 
+import NavigationIcon from "@mui/icons-material/Navigation";
+import Fab from "@mui/material/Fab";
+import Drawer from "@mui/material/Drawer";
+import MovieReviews from '../movieReviews'
+
 const styles = {
     chipSet: {
         display: "flex",
@@ -26,7 +31,11 @@ const styles = {
         maxWidth: 300,
         alignItems: "center"
     },
-
+    fab: {
+        position: "fixed",
+        top: 50,
+        right: 2,
+    },
 };
 
 
@@ -70,6 +79,7 @@ const MovieDetails = (props) => {
     const movie = props.movie
     const [movieCredits, setMovieCredits] = useState([]);
     const [similarMovies, setSimilarMovies] = useState([]);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(() => {
         if (props.type === "movies") {
@@ -216,6 +226,18 @@ const MovieDetails = (props) => {
                     </Slider>
                 </Typography>
                 : ""}
+            <Fab
+                color="secondary"
+                variant="extended"
+                onClick={() => setDrawerOpen(true)}
+                sx={styles.fab}
+            >
+                <NavigationIcon />
+                Reviews
+            </Fab>
+            <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                <MovieReviews movie={movie} />
+            </Drawer>
         </>
     );
 };

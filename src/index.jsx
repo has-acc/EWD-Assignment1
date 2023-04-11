@@ -33,7 +33,7 @@ const App = () => {
                 <Route path="/movies/" element={<HomePage type="movies" />} />
                 <Route path="/tvshows/" element={<HomePage type="tvshows" />} />
                 <Route path="/person/:id" element={<MoviePage type="actor" />} />
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<HomePage type="movies" />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>
