@@ -33,7 +33,7 @@ const HomePage = (props) => {
 
     return (
         <PageTemplate
-            title={"Discover " + props.type === "tvshows" ? "TV Shows" : props.type}
+            title={ props.type === "tvshows" ? "Discover TV Shows" :"Discover " + props.type}
             movies={movies}
             tvShows={tvShows}
             selectFavourite={addToFavourites}

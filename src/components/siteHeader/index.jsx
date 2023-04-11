@@ -11,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useAuth } from "../../contexts/AuthProvider";
 
 const styles = {
     title: {
@@ -30,16 +31,33 @@ const SiteHeader = () => {
     const open = Boolean(anchorEl);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-
+    const { auth, signOut } = useAuth();
+    
     const menuOptions = [
         { label: "Home", path: "/" },
+        !auth && (
+            { label: "Login", path: "/login/" }),
         { label: "Discover Movies", path: "/movies/" },
         { label: "Discover TV Shows", path: "/tvshows" },
         { label: "Movie Favourites", path: "/movies/movieFavourites" },
         { label: "TV Favourites", path: "/tvshows/tvFavourites" },
+        auth && (
+        { label: "Signout", path:"/signout"}),
     ];
 
+    const handleLogout = async (e) => {
+        try {
+            const { error } = await signOut();
+                console.log(error);
+            } catch (error) {
+                console.log(error);
+        }
+    };
+    
     const handleMenuSelect = (pageURL) => {
+        if (pageURL === "/signout") {
+            handleLogout();
+        }
         navigate(pageURL);
     };
 
@@ -85,19 +103,36 @@ const SiteHeader = () => {
                                 onClose={() => setAnchorEl(null)}
                             >
                                 {menuOptions.map((opt) => (
-                                    <MenuItem
+                                    opt.label === "Signout" ? 
+                                     <MenuItem
+                                        key={opt.label}
+                                        onClick={() => handleLogout()}
+                                    >
+                                        {opt.label}
+                                        </MenuItem>
+                                        :
+                                        <MenuItem
                                         key={opt.label}
                                         onClick={() => handleMenuSelect(opt.path)}
                                     >
                                         {opt.label}
-                                    </MenuItem>
+                                        </MenuItem>
                                 ))}
                             </Menu>
                         </>
                     ) : (
                         <>
                             {menuOptions.map((opt) => (
+                                opt.label === "Signout" ? 
                                 <Button
+                                    key={opt.label}
+                                    color="inherit"
+                                    onClick={() => handleLogout()}
+                                >
+                                    {opt.label}
+                                    </Button>
+                                    : 
+                                    <Button
                                     key={opt.label}
                                     color="inherit"
                                     onClick={() => handleMenuSelect(opt.path)}

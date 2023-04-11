@@ -34,7 +34,6 @@ const TemplateMoviePage = ({ movie, children, props }) => {
                 setImages(images);
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
