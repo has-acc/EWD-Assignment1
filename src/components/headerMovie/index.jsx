@@ -48,12 +48,12 @@ const MovieHeader = (props) => {
             </IconButton>
             {favorite}
             <Typography variant="h4" component="h3">
-                {props.type === "movies" ? movie.title:movie.name}{"   "}
+                {props.type === "movies" ? movie.title : movie.name}{"   "}
                 <a href={movie.homepage}>
                     <HomeIcon color="primary" fontSize="='large" />
                 </a>
                 <br />
-                <span>{props.type === "movies" ? movie.tagline:""} </span>
+                <span>{props.type === "movies" ? movie.tagline : ""} </span>
             </Typography>
             <IconButton aria-label="go forward">
                 <ArrowForwardIcon color="primary" fontSize="large" />

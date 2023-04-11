@@ -2,16 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
-import { getMovie } from "../api/tmdb-api";
+import { getMovie, getTVShow } from "../api/tmdb-api";
 
 const MovieDetailsPage = (props) => {
+    console.log("Movie details page " + props.type)
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
 
     useEffect(() => {
-        getMovie(id).then((movie) => {
-            setMovie(movie);
-        });
+        if (props.type === "movies") {
+            getMovie(id).then((movie) => {
+                setMovie(movie);
+            });
+        } else if (props.type === "tvshows") {
+            getTVShow(id).then((movie) => {
+                setMovie(movie);
+            });
+        }
     }, [id]);
 
     return (

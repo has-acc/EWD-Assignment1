@@ -76,6 +76,7 @@ var settings = {
 
 const MovieDetails = (props) => {
     console.log("details " + props.type)
+
     const movie = props.movie
     const [movieCredits, setMovieCredits] = useState([]);
     const [similarMovies, setSimilarMovies] = useState([]);
@@ -235,8 +236,8 @@ const MovieDetails = (props) => {
                 <NavigationIcon />
                 Reviews
             </Fab>
-            <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)} type={props.type}>
-                <MovieReviews movie={movie} type={props.type} />
+            <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                <MovieReviews movie={movie} type={props} />
             </Drawer>
         </>
     );

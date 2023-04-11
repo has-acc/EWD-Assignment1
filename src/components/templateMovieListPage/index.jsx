@@ -18,7 +18,7 @@ const styles = {
     },
 };
 
-function MovieListPageTemplate({ movies, title, selectFavourite, props, tvShows }) {
+function MovieListPageTemplate({ movies, tvShows, title, selectFavourite, props }) {
     console.log("test " + props.type);
     const [titleFilter, setTitleFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState("0");
@@ -34,9 +34,10 @@ function MovieListPageTemplate({ movies, title, selectFavourite, props, tvShows 
             .filter((m) => {
                 return genreId > 0 ? m.genre_ids.includes(genreId) : true;
             });
-    } else {
+    } else if (props.type === "tvshows") {
         displayedMovies = tvShows
             .filter((m) => {
+                console.log(m.name)
                 return m.name.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
             })
             .filter((m) => {
@@ -70,6 +71,7 @@ function MovieListPageTemplate({ movies, title, selectFavourite, props, tvShows 
                 variant="extended"
                 onClick={() => setDrawerOpen(true)}
                 sx={styles.fab}
+                type={props.type}
             >
                 Filter
             </Fab>
@@ -77,6 +79,7 @@ function MovieListPageTemplate({ movies, title, selectFavourite, props, tvShows 
                 anchor="left"
                 open={drawerOpen}
                 onClose={() => setDrawerOpen(false)}
+
             >
                 <FilterCard
                     onUserInput={handleChange}
