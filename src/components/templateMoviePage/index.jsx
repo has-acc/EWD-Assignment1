@@ -3,7 +3,7 @@ import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getMovieImages, getTVShowImages } from "../../api/tmdb-api";
+import { getMovieImages, getTVShowImages, getPersonImages } from "../../api/tmdb-api";
 
 const styles = {
     gridListRoot: {
@@ -27,6 +27,10 @@ const TemplateMoviePage = ({ movie, children, props }) => {
             });
         } else if (props.type === "tvshows") {
             getTVShowImages(movie.id).then((images) => {
+                setImages(images);
+            });
+        } else if (props.type === "actor") {
+            getPersonImages(movie.id).then((images) => {
                 setImages(images);
             });
         }

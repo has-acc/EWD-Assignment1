@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
-import { getMovie, getTVShow } from "../api/tmdb-api";
+import { getMovie, getPerson, getTVShow } from "../api/tmdb-api";
 
 const MovieDetailsPage = (props) => {
     console.log("Movie details page " + props.type)
@@ -16,6 +16,10 @@ const MovieDetailsPage = (props) => {
             });
         } else if (props.type === "tvshows") {
             getTVShow(id).then((movie) => {
+                setMovie(movie);
+            });
+        } else if (props.type === "actor") {
+            getPerson(id).then((movie) => {
                 setMovie(movie);
             });
         }
