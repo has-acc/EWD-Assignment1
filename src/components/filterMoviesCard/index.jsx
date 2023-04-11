@@ -53,7 +53,7 @@ export default function FilterMoviesCard(props) {
                 <CardContent>
                     <Typography variant="h5" component="h1">
                         <FilterAltIcon fontSize="large" />
-                        Filter the {props.type}.
+                        Filter the {props.type === "tvshows" ? "TV Shows" : props.type}.
                     </Typography>
                     <TextField
                         sx={styles.formControl}
@@ -87,7 +87,7 @@ export default function FilterMoviesCard(props) {
                 <CardContent>
                     <Typography variant="h5" component="h1">
                         <SortIcon fontSize="large" />
-                        Sort the {props.type}.
+                        Sort the {props.type === "tvshows" ? "TV Shows" : props.type}.
                     </Typography>
                 </CardContent>
             </Card>

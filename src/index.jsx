@@ -1,31 +1,16 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Navigate, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
+import SiteHeader from './components/siteHeader'
 
 const App = () => {
     return (
         <BrowserRouter>
-            <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/movies/">Discover Movies</Link>
-                </li>
-                <li>
-                    <Link to="/tvshows/">Discover TV Shows</Link>
-                </li>
-                <li>
-                    <Link to="/movies/movieFavourites">Movie Favourites</Link>
-                </li>
-                <li>
-                    <Link to="/tvshows/tvFavourites">TV Favourites</Link>
-                </li>
-            </ul>
+            <SiteHeader />
             <Routes>
                 <Route path="/movies/movieFavourites" element={<FavouriteMoviesPage type="movies" />} />
                 <Route path="/tvshows/tvFavourites" element={<FavouriteMoviesPage type="tvshows" />} />

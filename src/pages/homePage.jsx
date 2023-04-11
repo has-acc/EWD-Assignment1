@@ -4,6 +4,7 @@ import { getMovies, getTVShows } from "../api/tmdb-api";
 
 const HomePage = (props) => {
     console.log("Props " + props.type)
+    const title = props.type === "tvshows" ? "TV Shows" : props.type
     const [movies, setMovies] = useState([]);
     const [tvShows, setTVShows] = useState([]);
 
