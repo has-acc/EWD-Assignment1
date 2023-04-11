@@ -28,11 +28,11 @@ const HomePage = (props) => {
             setTVShows(tvShows);
         });
     }, []);
-    
+
 
     return (
         <PageTemplate
-            title={"Discover " + props.type==="tvshows" ? "TV Shows" : props.type}
+            title={"Discover " + props.type === "tvshows" ? "TV Shows" : props.type}
             movies={movies}
             tvShows={tvShows}
             selectFavourite={addToFavourites}

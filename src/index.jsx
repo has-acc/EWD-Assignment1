@@ -13,10 +13,10 @@ const App = () => {
                     <Link to="/">Home</Link>
                 </li>
                 <li>
-                    <Link to="/movies/">Movies</Link>
+                    <Link to="/movies/">Discover Movies</Link>
                 </li>
                 <li>
-                    <Link to="/tvshows/">TV Shows</Link>
+                    <Link to="/tvshows/">Discover TV Shows</Link>
                 </li>
                 <li>
                     <Link to="/movies/movieFavourites">Movie Favourites</Link>
@@ -28,8 +28,8 @@ const App = () => {
             <Routes>
                 <Route path="/movies/movieFavourites" element={<FavouriteMoviesPage type="movies" />} />
                 <Route path="/tvshows/tvFavourites" element={<FavouriteMoviesPage type="tvshows" />} />
-                <Route path="/movies/:id" element={<MoviePage type="movies"/>} />
-                <Route path="/tvshows/:id" element={<MoviePage type="tvshows"/>} />
+                <Route path="/movies/:id" element={<MoviePage type="movies" />} />
+                <Route path="/tvshows/:id" element={<MoviePage type="tvshows" />} />
                 <Route path="/movies/" element={<HomePage type="movies" />} />
                 <Route path="/tvshows/" element={<HomePage type="tvshows" />} />
                 <Route path="/person/:id" element={<MoviePage type="actor" />} />

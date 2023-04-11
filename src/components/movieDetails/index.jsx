@@ -24,45 +24,46 @@ const styles = {
     },
     card: {
         maxWidth: 300,
-        alignItems: "center"},
+        alignItems: "center"
+    },
 
 };
 
 
 var settings = {
-      dots: true,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 4,
-      slidesToScroll: 4,
-      initialSlide: 0,
-      responsive: [
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    responsive: [
         {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: false,
-            dots: true
-          }
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: false,
+                dots: true
+            }
         },
         {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2,
-            initialSlide: 2
-          }
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 2
+            }
         },
         {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
         }
-      ]
-    };
+    ]
+};
 
 const MovieDetails = (props) => {
     console.log("details " + props.type)
@@ -91,9 +92,9 @@ const MovieDetails = (props) => {
                         similarMovie.backdrop_path = 'https://www.themoviedb.org/t/p/w300_and_h300_face/' + similarMovie.backdrop_path
                     }
                 })
-            setSimilarMovies(similarMovies);
-        });
-        } else if (props.type === "tvshows"){
+                setSimilarMovies(similarMovies);
+            });
+        } else if (props.type === "tvshows") {
             getTVShowCredits(movie.id).then(movieCredits => {
                 movieCredits.map(movieCredit => {
                     if (movieCredit.profile_path === null) {
@@ -106,19 +107,20 @@ const MovieDetails = (props) => {
             });
             getSimilarTVShows(movie.id).then(similarMovies => {
                 similarMovies.map(similarMovie => {
-                console.log(similarMovie.name)
-                if (similarMovie.backdrop_path === null) {
+                    console.log(similarMovie.name)
+                    if (similarMovie.backdrop_path === null) {
                         similarMovie.backdrop_path = "/i-t32yvKixg10fG.png"
                     } else {
                         similarMovie.backdrop_path = 'https://www.themoviedb.org/t/p/w300_and_h300_face/' + similarMovie.backdrop_path
-                    }            })
-            setSimilarMovies(similarMovies);
-        });
+                    }
+                })
+                setSimilarMovies(similarMovies);
+            });
         } else {
 
         }
-     }, []);
-        
+    }, []);
+
     return (
         <>
             <Typography variant="h5" component="h3">
@@ -126,7 +128,7 @@ const MovieDetails = (props) => {
             </Typography>
 
             <Typography variant="h6" component="span">
-                {props.type==="movies" || props.type==="tvshows" ? movie.overview : movie.biography}
+                {props.type === "movies" || props.type === "tvshows" ? movie.overview : movie.biography === "" ? "No Biography found " : movie.biography}
             </Typography>
             {props.type === "movies" || props.type === "tvshows" ?
                 <Paper component="ul" sx={styles.chipSet}>
@@ -139,7 +141,7 @@ const MovieDetails = (props) => {
                         </li>
                     )) : ""}
                 </Paper>
-            :""}
+                : ""}
             {props.type === "movies" &&
                 <Paper component="ul" sx={styles.chipSet}>
                     <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
@@ -165,12 +167,12 @@ const MovieDetails = (props) => {
                         </li>
                     )) : ""}
                 </Paper>
-            :""}
+                : ""}
             {props.type === "movies" || props.type === "tvshows" ?
                 <Typography variant="h5" component="h3">
                     Cast
                 </Typography>
-            :""}
+                : ""}
             {props.type === "movies" || props.type === "tvshows" ?
                 <Typography variant="h6" component="span">
                     <Slider {...settings}>
@@ -189,17 +191,17 @@ const MovieDetails = (props) => {
                             ))}
                     </Slider>
                 </Typography>
-            :""}
+                : ""}
             <p></p>
             {props.type === "movies" || props.type === "tvshows" ?
                 <Typography variant="h5" component="h3">
                     Similar {props.type === "movies" ? "Movies" : "TV Shows"}
                 </Typography>
-            :""}
+                : ""}
             {props.type === "movies" || props.type === "tvshows" ?
                 <Typography variant="h6" component="span">
                     <Slider {...settings}>
-                        {similarMovies.slice(0, 4).map(
+                        {similarMovies.map(
                             similarMovie => (
                                 <a href={"/" + props.type + "/" + similarMovie.id} key={similarMovie.id}>
 
@@ -213,7 +215,7 @@ const MovieDetails = (props) => {
                             ))}
                     </Slider>
                 </Typography>
-            :""}
+                : ""}
         </>
     );
 };

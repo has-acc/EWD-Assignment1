@@ -18,7 +18,7 @@ const styles = {
     },
 };
 
-function MovieListPageTemplate({ movies, title, selectFavourite, props,tvShows }) {
+function MovieListPageTemplate({ movies, title, selectFavourite, props, tvShows }) {
     console.log("test " + props.type);
     const [titleFilter, setTitleFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState("0");
@@ -26,7 +26,7 @@ function MovieListPageTemplate({ movies, title, selectFavourite, props,tvShows }
 
     const genreId = Number(genreFilter);
     let displayedMovies;
-    if (props.type==="movies") {
+    if (props.type === "movies") {
         displayedMovies = movies
             .filter((m) => {
                 return m.title.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
@@ -54,7 +54,7 @@ function MovieListPageTemplate({ movies, title, selectFavourite, props,tvShows }
         <>
             <Grid container sx={styles.root}>
                 <Grid item xs={12}>
-                    <Header title = { title }
+                    <Header title={title}
                         type={props.type} />
                 </Grid>
                 <Grid item container spacing={5}>

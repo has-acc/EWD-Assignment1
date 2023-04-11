@@ -29,7 +29,7 @@ const Header = (props) => {
             </IconButton>
 
             <Typography variant="h4" component="h3">
-                {props.type==="movies" || props.type==="tvshows" ? "Discover " + props.title : name}
+                {props.type === "movies" || props.type === "tvshows" ? "Discover " + title : name}
             </Typography>
             <IconButton
                 aria-label="go forward"
