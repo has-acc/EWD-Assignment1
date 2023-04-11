@@ -5,7 +5,7 @@ import MovieDetails from "../components/movieDetails/";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getMovie, getMovieImages } from "../api/tmdb-api";
+import { getMovie, getMovieImages, getTVShow, getTVShowImages, getPerson, getPersonImages } from "../api/tmdb-api";
 
 const styles = {
     imageListRoot: {
@@ -16,27 +16,43 @@ const styles = {
 };
 
 const MoviePage = (props) => {
+    console.log("Movie page " + props.type)
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
     const [images, setImages] = useState([]);
+    const [person, setPerson] = useState(null);
 
     useEffect(() => {
-        getMovie(id).then((movie) => {
-            setMovie(movie);
+        if (props.type === "movies") {
+            getMovie(id).then((movie) => {
+                setMovie(movie);
+            });
+            getMovieImages(id).then((images) => {
+                setImages(images);
+            });
+        } else if (props.type==="tvshows"){
+            getTVShow(id).then((movie) => {
+                setMovie(movie);
+            });
+            getTVShowImages(id).then((images) => {
+                setImages(images);
+            });
+        } else {
+            getPerson(id).then((person) => {
+                setMovie(person);
+            });
+            getPersonImages(id).then((images) => {
+                setImages(images);
         });
+        }
     }, [id]);
 
-    useEffect(() => {
-        getMovieImages(id).then((images) => {
-            setImages(images);
-        });
-    }, []);
 
     return (
         <>
             {movie ? (
                 <>
-                    <MovieHeader movie={movie} />
+                    <MovieHeader movie={movie} type={props.type} />
                     <Grid container spacing={5} style={{ padding: "15px" }}>
                         <Grid item xs={3}>
                             <div sx={styles.imageListRoot}>
@@ -57,7 +73,7 @@ const MoviePage = (props) => {
                             </div>
                         </Grid>
                         <Grid item xs={9}>
-                            <MovieDetails movie={movie} />
+                            <MovieDetails movie={movie} type={props.type} />
                         </Grid>
                     </Grid>
                 </>

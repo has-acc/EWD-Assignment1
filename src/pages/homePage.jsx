@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, updateState } from "react";
 import PageTemplate from '../components/templateMovieListPage'
-import { getMovies } from "../api/tmdb-api";
+import { getMovies, getTVShows } from "../api/tmdb-api";
 
 const HomePage = (props) => {
+    console.log("Props " + props.type)
     const [movies, setMovies] = useState([]);
+    const [tvShows, setTVShows] = useState([]);
+
     const favourites = movies.filter(m => m.favourite)
     localStorage.setItem('favourites', JSON.stringify(favourites))
 
@@ -20,11 +23,20 @@ const HomePage = (props) => {
         });
     }, []);
 
+    useEffect(() => {
+        getTVShows().then(tvShows => {
+            setTVShows(tvShows);
+        });
+    }, []);
+    
+
     return (
         <PageTemplate
-            title='Discover Movies'
+            title={"Discover " + props.type==="tvshows" ? "TV Shows" : props.type}
             movies={movies}
+            tvShows={tvShows}
             selectFavourite={addToFavourites}
+            props={props}
         />
     );
 };

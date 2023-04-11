@@ -27,7 +27,7 @@ const styles = {
 
 export default function FilterMoviesCard(props) {
     const [genres, setGenres] = useState([{ id: '0', name: "All" }])
-
+    console.log("filter " + props.type)
     useEffect(() => {
         getGenres().then((allGenres) => {
             setGenres([genres[0], ...allGenres]);
@@ -53,7 +53,7 @@ export default function FilterMoviesCard(props) {
                 <CardContent>
                     <Typography variant="h5" component="h1">
                         <FilterAltIcon fontSize="large" />
-                        Filter the movies.
+                        Filter the {props.type}.
                     </Typography>
                     <TextField
                         sx={styles.formControl}
@@ -87,7 +87,7 @@ export default function FilterMoviesCard(props) {
                 <CardContent>
                     <Typography variant="h5" component="h1">
                         <SortIcon fontSize="large" />
-                        Sort the movies.
+                        Sort the {props.type}.
                     </Typography>
                 </CardContent>
             </Card>

@@ -18,23 +18,35 @@ const styles = {
     },
 };
 
-function MovieListPageTemplate({ movies, title, selectFavourite }) {
+function MovieListPageTemplate({ movies, title, selectFavourite, props,tvShows }) {
+    console.log("test " + props.type);
     const [titleFilter, setTitleFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState("0");
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const genreId = Number(genreFilter);
-
-    let displayedMovies = movies
-        .filter((m) => {
-            return m.title.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
-        })
-        .filter((m) => {
-            return genreId > 0 ? m.genre_ids.includes(genreId) : true;
-        });
+    let displayedMovies;
+    if (props.type==="movies") {
+        displayedMovies = movies
+            .filter((m) => {
+                return m.title.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
+            })
+            .filter((m) => {
+                return genreId > 0 ? m.genre_ids.includes(genreId) : true;
+            });
+    } else {
+        displayedMovies = tvShows
+            .filter((m) => {
+                return m.name.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
+            })
+            .filter((m) => {
+                return genreId > 0 ? m.genre_ids.includes(genreId) : true;
+            });
+    }
 
     const handleChange = (type, value) => {
         if (type === "title") setTitleFilter(value);
+        else if (type === "name") setTitleFilter(value);
         else setGenreFilter(value);
     };
 
@@ -42,12 +54,14 @@ function MovieListPageTemplate({ movies, title, selectFavourite }) {
         <>
             <Grid container sx={styles.root}>
                 <Grid item xs={12}>
-                    <Header title={title} />
+                    <Header title = { title }
+                        type={props.type} />
                 </Grid>
                 <Grid item container spacing={5}>
                     <MovieList
                         movies={displayedMovies}
                         selectFavourite={selectFavourite}
+                        type={props.type}
                     />
                 </Grid>
             </Grid>
@@ -68,6 +82,7 @@ function MovieListPageTemplate({ movies, title, selectFavourite }) {
                     onUserInput={handleChange}
                     titleFilter={titleFilter}
                     genreFilter={genreFilter}
+                    type={props.type}
                 />
             </Drawer>
         </>

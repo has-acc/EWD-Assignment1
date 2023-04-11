@@ -7,7 +7,7 @@ import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
 import Slider from "react-slick";
 import Card from "@mui/material/Card";
-import { getMovieCredits, getSimilarMovies } from "../../api/tmdb-api";
+import { getMovieCredits, getSimilarMovies, getTVShowCredits, getSimilarTVShows } from "../../api/tmdb-api";
 
 const styles = {
     chipSet: {
@@ -65,32 +65,60 @@ var settings = {
     };
 
 const MovieDetails = (props) => {
+    console.log("details " + props.type)
     const movie = props.movie
     const [movieCredits, setMovieCredits] = useState([]);
     const [similarMovies, setSimilarMovies] = useState([]);
 
-     useEffect(() => {
-         getMovieCredits(movie.id).then(movieCredits => {
-             movieCredits.map(movieCredit => {
-                 if (movieCredit.profile_path === null) {
-                    movieCredit.profile_path="https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg"
-                 } else {
-                    movieCredit.profile_path='https://www.themoviedb.org/t/p/w300_and_h300_face/' + movieCredit.profile_path
-                 }
-             }) 
-            setMovieCredits(movieCredits);
-        });
-     }, []);
-    
     useEffect(() => {
-        getSimilarMovies(movie.id).then(similarMovies => {
-            similarMovies.map(similarMovie => {
-                similarMovie.backdrop_path='https://www.themoviedb.org/t/p/w300_and_h300_face/' + similarMovie.backdrop_path
-            })
+        if (props.type === "movies") {
+            getMovieCredits(movie.id).then(movieCredits => {
+                movieCredits.map(movieCredit => {
+                    if (movieCredit.profile_path === null) {
+                        movieCredit.profile_path = "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg"
+                    } else {
+                        movieCredit.profile_path = 'https://www.themoviedb.org/t/p/w300_and_h300_face/' + movieCredit.profile_path
+                    }
+                })
+                setMovieCredits(movieCredits);
+            });
+            getSimilarMovies(movie.id).then(similarMovies => {
+                similarMovies.map(similarMovie => {
+                    if (similarMovie.backdrop_path === null) {
+                        console.log(similarMovie.backdrop_path)
+                        similarMovie.backdrop_path = "/i-t32yvKixg10fG.png"
+                    } else {
+                        similarMovie.backdrop_path = 'https://www.themoviedb.org/t/p/w300_and_h300_face/' + similarMovie.backdrop_path
+                    }
+                })
             setSimilarMovies(similarMovies);
         });
-    }, []);
-    
+        } else if (props.type === "tvshows"){
+            getTVShowCredits(movie.id).then(movieCredits => {
+                movieCredits.map(movieCredit => {
+                    if (movieCredit.profile_path === null) {
+                        movieCredit.profile_path = "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg"
+                    } else {
+                        movieCredit.profile_path = 'https://www.themoviedb.org/t/p/w300_and_h300_face/' + movieCredit.profile_path
+                    }
+                })
+                setMovieCredits(movieCredits);
+            });
+            getSimilarTVShows(movie.id).then(similarMovies => {
+                similarMovies.map(similarMovie => {
+                console.log(similarMovie.name)
+                if (similarMovie.backdrop_path === null) {
+                        similarMovie.backdrop_path = "/i-t32yvKixg10fG.png"
+                    } else {
+                        similarMovie.backdrop_path = 'https://www.themoviedb.org/t/p/w300_and_h300_face/' + similarMovie.backdrop_path
+                    }            })
+            setSimilarMovies(similarMovies);
+        });
+        } else {
+
+        }
+     }, []);
+        
     return (
         <>
             <Typography variant="h5" component="h3">
@@ -98,82 +126,94 @@ const MovieDetails = (props) => {
             </Typography>
 
             <Typography variant="h6" component="span">
-                {movie.overview}
+                {props.type==="movies" || props.type==="tvshows" ? movie.overview : movie.biography}
             </Typography>
-
-            <Paper component="ul" sx={styles.chipSet}>
-                <li>
-                    <Chip label="Genres" sx={styles.chipLabel} color="primary" />
-                </li>
-                {movie.genres.map((g) => (
-                    <li key={g.name}>
-                        <Chip label={g.name} />
+            {props.type === "movies" || props.type === "tvshows" ?
+                <Paper component="ul" sx={styles.chipSet}>
+                    <li>
+                        <Chip label="Genres" sx={styles.chipLabel} color="primary" />
                     </li>
-                ))}
-            </Paper>
-            <Paper component="ul" sx={styles.chipSet}>
-                <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-                <Chip
-                    icon={<MonetizationIcon />}
-                    label={`${movie.revenue.toLocaleString()}`}
-                />
-                <Chip
-                    icon={<StarRate />}
-                    label={`${movie.vote_average} (${movie.vote_count}`}
-                />
-                <Chip label={`Released: ${movie.release_date}`} />
-            </Paper>
-            <Paper component="ul" sx={styles.chipSet}>
-                <li>
-                    <Chip label="Production Countries" sx={styles.chipLabel} color="primary" />
-                </li>
-                {movie.production_countries.map((g) => (
-                    <li key={g.name}>
-                        <Chip label={g.name} />
+                    {props.type === "movies" || props.type === "tvshows" ? movie.genres.map((g) => (
+                        <li key={g.name}>
+                            <Chip label={g.name} />
+                        </li>
+                    )) : ""}
+                </Paper>
+            :""}
+            {props.type === "movies" &&
+                <Paper component="ul" sx={styles.chipSet}>
+                    <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
+                    <Chip
+                        icon={<MonetizationIcon />}
+                        label={`${movie.revenue.toLocaleString()}`}
+                    />
+                    <Chip
+                        icon={<StarRate />}
+                        label={`${movie.vote_average} (${movie.vote_count}`}
+                    />
+                    <Chip label={props.type === "movies" ? `Released: ${movie.release_date}` : `First Air Date: ${movie.first_air_date}`} />
+                </Paper>
+            }
+            {props.type === "movies" || props.type === "tvshows" ?
+                <Paper component="ul" sx={styles.chipSet}>
+                    <li>
+                        <Chip label="Production Countries" sx={styles.chipLabel} color="primary" />
                     </li>
-                ))}
-            </Paper>
-            <Typography variant="h5" component="h3">
-                Cast
-            </Typography>
+                    {props.type === "movies" || props.type === "tvshows" ? movie.production_countries.map((g) => (
+                        <li key={g.name}>
+                            <Chip label={g.name} />
+                        </li>
+                    )) : ""}
+                </Paper>
+            :""}
+            {props.type === "movies" || props.type === "tvshows" ?
+                <Typography variant="h5" component="h3">
+                    Cast
+                </Typography>
+            :""}
+            {props.type === "movies" || props.type === "tvshows" ?
+                <Typography variant="h6" component="span">
+                    <Slider {...settings}>
+                        {movieCredits.map(
+                            movieCredit => (
+                                <a href={"/person/" + movieCredit.id} key={movieCredit.id}>
 
-            <Typography variant="h6" component="span">
-                <Slider {...settings}>
-                    {movieCredits.map(
-                        movieCredit => (
-                            <a href={"/person/" + movieCredit.id} key={movieCredit.id}>
-
-                                <Card sx={styles.card}>
-                                <div>
-                                    <><img src={movieCredit.profile_path} /><br></br></>
-                                    Name: {movieCredit.name}<br></br>
-                                    Character: {movieCredit.character}
-                                </div>
-                            </Card>
-                        </a>
-                        ))}
-                </Slider>
-            </Typography>
+                                    <Card sx={styles.card}>
+                                        <div>
+                                            <><img src={movieCredit.profile_path} /><br></br></>
+                                            Name: {movieCredit.name}<br></br>
+                                            Character: {movieCredit.character}
+                                        </div>
+                                    </Card>
+                                </a>
+                            ))}
+                    </Slider>
+                </Typography>
+            :""}
             <p></p>
-            <Typography variant="h5" component="h3">
-                Similar Movies                 
-            </Typography>
-            <Typography variant="h6" component="span">
-                <Slider {...settings}>
-                    {similarMovies.slice(0,4).map(
-                        similarMovie => (
-                            <a href={"/movies/" + similarMovie.id} key={similarMovie.id}>
+            {props.type === "movies" || props.type === "tvshows" ?
+                <Typography variant="h5" component="h3">
+                    Similar {props.type === "movies" ? "Movies" : "TV Shows"}
+                </Typography>
+            :""}
+            {props.type === "movies" || props.type === "tvshows" ?
+                <Typography variant="h6" component="span">
+                    <Slider {...settings}>
+                        {similarMovies.slice(0, 4).map(
+                            similarMovie => (
+                                <a href={"/" + props.type + "/" + similarMovie.id} key={similarMovie.id}>
 
-                                <Card sx={styles.card}>
-                                <div>
-                                    <><img src={similarMovie.backdrop_path} /><br></br></>
-                                    Title: {similarMovie.title}<br></br>
-                                </div>
-                            </Card>
-                        </a>
-                        ))}
-                </Slider>
-            </Typography>
+                                    <Card sx={styles.card}>
+                                        <div>
+                                            <><img src={similarMovie.backdrop_path} /><br></br></>
+                                            Title: {props.type === "movies" ? similarMovie.title : similarMovie.name}<br></br>
+                                        </div>
+                                    </Card>
+                                </a>
+                            ))}
+                    </Slider>
+                </Typography>
+            :""}
         </>
     );
 };

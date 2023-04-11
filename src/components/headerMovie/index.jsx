@@ -23,11 +23,18 @@ const styles = {
 };
 
 const MovieHeader = (props) => {
+    console.log("movie " + props.type)
     const movie = props.movie;
+    const tvShow = props.tvShows;
     const json = localStorage.getItem("favourites");
+
     const movies = JSON.parse(json).filter(n => {
         return n.title === movie.title;
     });
+
+    const tvShows = JSON.parse(json).filter(n => {
+        return n.name === tvShow.name;
+    })
 
     let favorite;
     if (movies.length !== 0 && movies[0].favourite === true) {
@@ -41,12 +48,12 @@ const MovieHeader = (props) => {
             </IconButton>
             {favorite}
             <Typography variant="h4" component="h3">
-                {movie.title}{"   "}
+                {props.type === "movies" ? movie.title:movie.name}{"   "}
                 <a href={movie.homepage}>
                     <HomeIcon color="primary" fontSize="='large" />
                 </a>
                 <br />
-                <span>{`${movie.tagline}`} </span>
+                <span>{props.type === "movies" ? movie.tagline:""} </span>
             </Typography>
             <IconButton aria-label="go forward">
                 <ArrowForwardIcon color="primary" fontSize="large" />

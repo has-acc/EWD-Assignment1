@@ -24,6 +24,7 @@ const styles = {
 };
 
 export default function MovieCard(props) {
+    console.log("card "+ props.type)
     const movie = props.movie;
 
     const handleAddToFavourite = (e) => {
@@ -44,7 +45,7 @@ export default function MovieCard(props) {
                 }
                 title={
                     <Typography variant="h5" component="span">
-                        {movie.title}{" "}
+                        {props.type==="movies" ? movie.title : movie.name}{" "}
                     </Typography>
                 }
             />
@@ -61,7 +62,7 @@ export default function MovieCard(props) {
                     <Grid item xs={6}>
                         <Typography variant="h6" component="span">
                             <CalendarIcon fontSize="small" />
-                            {movie.release_date}
+                            {props.type==="movies" ? movie.release_date : movie.first_air_date}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -76,7 +77,7 @@ export default function MovieCard(props) {
                 <IconButton aria-label="add to favorites" onClick={handleAddToFavourite}>
                     <FavoriteIcon color="primary" fontSize="large" />
                 </IconButton>
-                <Link to={`/movies/${movie.id}`}>
+                <Link to={`/${props.type}/${movie.id}`}>
                     <Button variant="outlined" size="medium" color="primary">
                         More Info ...
                     </Button>

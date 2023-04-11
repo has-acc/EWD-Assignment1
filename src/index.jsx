@@ -2,12 +2,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes, Link } from "react-router-dom";
 import HomePage from "./pages/homePage";
-import HomePage2 from "./pages/homePage2";
 import MoviePage from "./pages/movieDetailsPage";
-import TVShowPage from "./pages/tvshowDetailsPage";
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
-import FavouriteTVShowsPage from "./pages/favouriteTVShowsPage";
-import PersonPage from "./pages/personDetailsPage";
 
 const App = () => {
     return (
@@ -30,13 +26,13 @@ const App = () => {
                 </li>
             </ul>
             <Routes>
-                <Route path="/movies/movieFavourites" element={<FavouriteMoviesPage />} />
-                <Route path="/tvshows/tvFavourites" element={<FavouriteTVShowsPage />} />
-                <Route path="/movies/:id" element={<MoviePage />} />
-                <Route path="/tvshows/:id" element={<TVShowPage />} />
-                <Route path="/movies/" element={<HomePage />} />
-                <Route path="/tvshows/" element={<HomePage2 />} />
-                <Route path="/person/:id" element={<PersonPage />} />
+                <Route path="/movies/movieFavourites" element={<FavouriteMoviesPage type="movies" />} />
+                <Route path="/tvshows/tvFavourites" element={<FavouriteMoviesPage type="tvshows" />} />
+                <Route path="/movies/:id" element={<MoviePage type="movies"/>} />
+                <Route path="/tvshows/:id" element={<MoviePage type="tvshows"/>} />
+                <Route path="/movies/" element={<HomePage type="movies" />} />
+                <Route path="/tvshows/" element={<HomePage type="tvshows" />} />
+                <Route path="/person/:id" element={<MoviePage type="actor" />} />
                 <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
