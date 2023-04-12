@@ -19,7 +19,6 @@ const styles = {
 };
 
 function MovieListPageTemplate({ movies, tvShows, title, selectFavourite, props }) {
-    console.log("test " + props.type);
     const [titleFilter, setTitleFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState("0");
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -37,7 +36,6 @@ function MovieListPageTemplate({ movies, tvShows, title, selectFavourite, props 
     } else if (props.type === "tvshows") {
         displayedMovies = tvShows
             .filter((m) => {
-                console.log(m.name)
                 return m.name.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
             })
             .filter((m) => {

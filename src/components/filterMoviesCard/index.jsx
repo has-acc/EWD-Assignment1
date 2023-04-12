@@ -27,7 +27,6 @@ const styles = {
 
 export default function FilterMoviesCard(props) {
     const [genres, setGenres] = useState([{ id: '0', name: "All" }])
-    console.log("filter " + props.type)
     useEffect(() => {
         getGenres().then((allGenres) => {
             setGenres([genres[0], ...allGenres]);

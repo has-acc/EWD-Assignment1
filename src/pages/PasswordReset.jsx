@@ -17,7 +17,7 @@ const PasswordReset = () => {
       if (!error) {
         setMsg("Password reset has been sent to your email");
       }
-c    } catch (e) {
+    } catch (e) {
       console.error(e);
     }
     setLoading(false);

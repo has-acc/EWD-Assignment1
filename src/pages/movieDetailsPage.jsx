@@ -5,7 +5,6 @@ import PageTemplate from "../components/templateMoviePage";
 import { getMovie, getPerson, getTVShow } from "../api/tmdb-api";
 
 const MovieDetailsPage = (props) => {
-    console.log("Movie details page " + props.type)
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
 

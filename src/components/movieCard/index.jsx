@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -14,6 +14,8 @@ import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import { supabase } from "../../supabase";
+import { useAuth } from "../../contexts/AuthProvider";
 
 const styles = {
     card: { maxWidth: 345 },
@@ -24,12 +26,21 @@ const styles = {
 };
 
 export default function MovieCard(props) {
-    console.log("card "+ props.type)
     const movie = props.movie;
+    const { user } = useAuth();
 
-    const handleAddToFavourite = (e) => {
-        e.preventDefault();
-        props.selectFavourite(movie.id);
+    const handleAddToFavourite = async (e) => {
+        //e.preventDefault();
+        if (props.type === "movies") {
+            const { error } = await supabase
+                .from("movies")
+                .upsert([{ id: movie.id, title: movie.title, poster_path: movie.poster_path, release_date: movie.release_date, vote_average: movie.vote_average, genre: movie.genre, user_id: user.id }]);
+        } else if (props.type === "tvshows") {
+            const { error } = await supabase
+                .from("tvshows")
+                .upsert([{ id: movie.id, name: movie.name, poster_path: movie.poster_path, first_air_date: movie.first_air_date, vote_average: movie.vote_average, genre: movie.genre, user_id: user.id }]);
+
+        }
     };
 
     return (
@@ -45,7 +56,7 @@ export default function MovieCard(props) {
                 }
                 title={
                     <Typography variant="h5" component="span">
-                        {props.type==="movies" ? movie.title : movie.name}{" "}
+                        {props.type === "movies" ? movie.title : movie.name}{" "}
                     </Typography>
                 }
             />
@@ -62,7 +73,7 @@ export default function MovieCard(props) {
                     <Grid item xs={6}>
                         <Typography variant="h6" component="span">
                             <CalendarIcon fontSize="small" />
-                            {props.type==="movies" ? movie.release_date : movie.first_air_date}
+                            {props.type === "movies" ? movie.release_date : movie.first_air_date}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>

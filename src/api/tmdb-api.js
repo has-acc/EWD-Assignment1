@@ -111,7 +111,6 @@ export const getMovieReviews = (id) => {
     )
         .then((res) => res.json())
         .then((json) => {
-            // console.log(json.results);
             return json.results;
         });
 };
@@ -122,7 +121,22 @@ export const getTVShowReviews = (id) => {
     )
         .then((res) => res.json())
         .then((json) => {
-            // console.log(json.results);
             return json.results;
         });
+};
+
+export const getUpcomingMovies = () => {
+    return fetch(
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&page=1`
+    )
+        .then(res => res.json())
+        .then(json => json.results);
+};
+
+export const getPopularTVShows = () => {
+    return fetch(
+        `https://api.themoviedb.org/3/tv/popular?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&page=1`
+    )
+        .then(res => res.json())
+        .then(json => json.results);
 };

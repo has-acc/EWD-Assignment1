@@ -1,8 +1,8 @@
 import React, { useState, useEffect, updateState } from "react";
 import PageTemplate from '../components/templateMovieListPage'
-import { getMovies, getTVShows } from "../api/tmdb-api";
+import { getPopularTVShows } from "../api/tmdb-api";
 
-const HomePage = (props) => {
+const PopularTVShows = (props) => {
     const title = props.type === "tvshows" ? "TV Shows" : props.type
     const [movies, setMovies] = useState([]);
     const [tvShows, setTVShows] = useState([]);
@@ -18,21 +18,14 @@ const HomePage = (props) => {
     };
 
     useEffect(() => {
-        getMovies().then(movies => {
-            setMovies(movies);
+        getPopularTVShows().then(movies => {
+            setTVShows(movies);
         });
     }, []);
-
-    useEffect(() => {
-        getTVShows().then(tvShows => {
-            setTVShows(tvShows);
-        });
-    }, []);
-
 
     return (
         <PageTemplate
-            title={props.type === "tvshows" ? "Discover TV Shows" : "Discover " + props.type}
+            title={"Popular TV Shows"}
             movies={movies}
             tvShows={tvShows}
             selectFavourite={addToFavourites}
@@ -40,4 +33,4 @@ const HomePage = (props) => {
         />
     );
 };
-export default HomePage;
+export default PopularTVShows;

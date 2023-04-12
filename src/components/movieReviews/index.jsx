@@ -19,7 +19,6 @@ const styles = {
 export default function MovieReviews(props) {
     const movie = props.movie;
     const type = props.type;
-    console.log("MovieReview " + props.type)
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
@@ -32,7 +31,6 @@ export default function MovieReviews(props) {
                 setReviews(reviews);
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

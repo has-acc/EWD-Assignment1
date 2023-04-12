@@ -16,7 +16,6 @@ const styles = {
 };
 
 const Header = (props) => {
-    console.log("header " + props.title)
     const title = props.title
     const name = props.name
 

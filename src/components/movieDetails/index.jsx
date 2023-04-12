@@ -75,7 +75,6 @@ var settings = {
 };
 
 const MovieDetails = (props) => {
-    console.log("details " + props.type)
     const movie = props.movie
     const [movieCredits, setMovieCredits] = useState([]);
     const [similarMovies, setSimilarMovies] = useState([]);
@@ -96,7 +95,6 @@ const MovieDetails = (props) => {
             getSimilarMovies(movie.id).then(similarMovies => {
                 similarMovies.map(similarMovie => {
                     if (similarMovie.backdrop_path === null) {
-                        console.log(similarMovie.backdrop_path)
                         similarMovie.backdrop_path = "/i-t32yvKixg10fG.png"
                     } else {
                         similarMovie.backdrop_path = 'https://www.themoviedb.org/t/p/w300_and_h300_face/' + similarMovie.backdrop_path
@@ -117,7 +115,6 @@ const MovieDetails = (props) => {
             });
             getSimilarTVShows(movie.id).then(similarMovies => {
                 similarMovies.map(similarMovie => {
-                    console.log(similarMovie.name)
                     if (similarMovie.backdrop_path === null) {
                         similarMovie.backdrop_path = "/i-t32yvKixg10fG.png"
                     } else {

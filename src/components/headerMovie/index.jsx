@@ -23,7 +23,6 @@ const styles = {
 };
 
 const MovieHeader = (props) => {
-    console.log("movie " + props.type)
     const movie = props.movie;
     const tvShow = props.tvShows;
     const json = localStorage.getItem("favourites");
