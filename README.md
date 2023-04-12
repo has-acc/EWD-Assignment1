@@ -1,81 +1,120 @@
 # Enterprise Web Development - Assignment 1.
 
-__Name:__ [your full name]
+**Name:** Cathal O'Connor
 
 ## Overview.
 
-[A bullet-point list of the features developed for the React SPA app (new/modified ones only for the Movies app),]
-
-+ Feature X.
-+ Feature Y. 
-+ etc.
+- Cast Section and biography page for moview and tv shows.
+- Similar movies/tv shows section and pages.
+- Authentication using supabase.
+- Favourite TV Show list using supabase.
+- Favourite movie list using supabase.
+- Popular TV shows page
+- Upcoming Movie page
 
 ## Feature Design.
 
-[ For each feature listed in the overview, show a screenshot(s) of its UI layout (use appropriate magnification for accessibility). Include captions with the images.]
+#### Cast Section and biography page for moview and tv shows.
 
-e.g. 
+> Cast section showing multiple members of the cast
+> ![](src/images/CastSection.png)
 
-#### The Upcoming Movies feature.
+> Cast member Bio page
+> ![](src/images/CastPage.png)
 
-> Lists movies from the Upcoming movies endpoint of TMDB
+#### Similar movies/tv shows section and pages.
 
-![][image1]
+> Similar section showing similar tv shows or movies depending on the page
+> ![](src/images/SimilarSection.png)
 
-#### Movies Reviews feature.
+#### Authentication using supabase.
 
-> Lists all the reviews for a particular movie (text extract only).
+> Login page used to either login or link to registers/reset password pages
+> ![](src/images/Login.png)
 
-![][image2]
+> Register page used to register using email with a confirmation email being sent to the user to confirm account
+> ![](src/images/Register.png)
 
-> Click the 'Full Review' link of an entry in the above list to show the full text of a review. 
+> Password reset page
+> ![](src/images/ResetPassword.png)
 
-![][image3]
+#### Favourite TV Show list using supabase.
 
-.... other features .......
+> Page showing favourite tv shows saved in the supabase DB
+> ![](src/images/FavTV.png)
 
-## Storybook.
+#### Favourite movie list using supabase.
 
-[ Include a screenshot(s) from the Storybook UI and highlight the stories for new components developed.]
+> Page showing favourite movies saved in the supabase DB
+> ![](src/images/FavMovies.png)
 
-e.g.
+#### Popular TV shows page
 
-![][image5]
+> Page showing tv shows from the popular endpoint
+> ![](src/images/Popular.png)
+
+#### Upcoming Movie page
+
+> Page showing moviess from the Upcoming endpoint
+> ![](src/images/Upcoming.png)
 
 ## Authentication.
 
-[ List all the routes in your app and highlight those that are protected/private (require authentication).]
-
-e.g.
-
-+ /movies - List of 20  movies from the Discover endpoint,
-+ /movies/{movie_id} - Detailed information on a specific movie.
-+ /reviews/{review_id} (Protected) - The full text of a movie review.
-+ /movie/{movie_id}/similar - A list of similar movies. 
-+ /person/{person_id} (Protected) - A specific actor's bio.
-+ etc
-+ etc
+- /movies/movieFavourites (Protected) - list of favourtied movies stored and retrieved from supabase
+- /tvshows/tvFavourites (Protected) - list of favourtied tv shows stored and retrieved from supabase
+- /movies/:id - Detailed information on specific movie, retrieved by movie id
+- /tvshows/:id - Detailed information on specific tv show, retrieved by tv show id
+- /movies/ - List of movies from Discover endpoint
+- /movies/upcoming - List of movies from Upcoming endpoint
+- /tvshows/ - List of tv shows from Discover endpoint
+- /tvshows/popular - List of tv shows from Popular endpoint
+- /person/:id - Detailed information on specific actor, retrived by actor id
+- /movies/reviews/:id - The full text of a movie review
+- /tvshows/reviews/:id - The full text of a tv show review
+- /passwordreset - Page with form to reset password by email address
+- /register - Page with form to register using email and password
+- /login - Page to login using email address and password
+- / - Route which directed to discover movies list
+- \* - Default redirect for all unknown routes
 
 #### Protected features (if relevant)
 
-[ Briefly state other areas where you used authentication in the app, for example, to protect access to functionality, e.g. only authenticated users can 'favourite' a movie.]
+Only authenticated users can save and access movie and tv favourites which are stored in supabase. Users can only view their own favourites from the database as it using Row Level Security
 
 #### Supabase (if relevant)
 
-[ Include a screenshot(s) from your Supabase account that verifies its use for this app. ]
+Supabase is used for authentication and storing of favourites
+
+> Userlist showing currently signed up users
+> ![](src/images/UserAuth.png)
+
+> Favourite TV shows restricted by user_id so users only see their own favourites
+> ![](src/images/tvShowDB.png)
+
+> Favourite Movies restricted by user_id so users only see their own favourites
+> ![](src/images/movieDB.png)
 
 ## Deployment (if relevant).
 
-[ Specify the URL of your deployed app and include a screenshot(s) from your deployment platform (e.g. Vercal) account that verifies its use for this app. Have a preregistered user for your app and specify their credentials.
+> App is deployed to vercel:
+> ![](src/images/deployment.png)
 
-Username: test1 ; Password: pass1
-]
+![](src/images/deployment1.png)
+
+Url is https://ewd-assignment1.vercel.app/
+
+Username: demouser@setu.ie
+Password: mftN0D59w^%2
 
 ## Persistence (if relevant).
 
-[ If you are persisting data to the Supabase backend, e.g. favourite movies, fantasy movie, include screenshots with appropriate captions to verify this aspect. ]
+> Favourite TV shows restricted by user_id so users only see their own favourites
+> ![](src/images/tvShowDB.png)
+
+> Favourite Movies restricted by user_id so users only see their own favourites
+> ![](src/images/movieDB.png)
 
 ## Additional Information.
 
-[ Briefly explain any other aspects of your app's design or implementation that is non-standard and worthy of mention.]
-
+- Header shows login/signout depending on auth status.
+- Reuse of template page based on type of content eg. tv show, movie, actor
